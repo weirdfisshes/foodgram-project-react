@@ -4,7 +4,7 @@ from .models import Ingredient, Recipe, Tag
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'quantity', 'unit') 
+    list_display = ('pk', 'name', 'quantity', 'measurement_unit') 
     search_fields = ('name',) 
     empty_value_display = '-пусто-'
 

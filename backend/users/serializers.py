@@ -1,8 +1,13 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
-from recipes.serializers import LiteRecipeSerializer
 from rest_framework import serializers
 
 from .models import Follow, User
+from recipes.models import Recipe
+
+class LiteRecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = ('id', 'name', 'image', 'time')
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):

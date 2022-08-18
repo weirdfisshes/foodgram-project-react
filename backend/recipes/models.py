@@ -13,7 +13,7 @@ class Ingredient(models.Model):
         max_length=100,
     )
 
-    unit = models.CharField(
+    measurement_unit = models.CharField(
         'Единица измерения',
         max_length=100,
     )
@@ -78,7 +78,7 @@ class Recipe(models.Model):
     text = models.TextField(
         verbose_name='Текст рецепта'
     )
-    time = models.PositiveSmallIntegerField(
+    cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления'
     )
     
@@ -113,3 +113,54 @@ class Favorite(models.Model):
             models.UniqueConstraint(fields=['user', 'recipe'],
                                     name='unique favorite')
         ]
+
+
+class RecipeIngredients(models.Model):
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='amounts',
+        verbose_name='Рецепт'
+    )
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.CASCADE,
+        related_name='amounts',
+        verbose_name='Ингредиент'
+    )
+    amount = models.PositiveSmallIntegerField(
+        'Количество ингредиента',
+    )
+
+    class Meta:
+        verbose_name = 'Количество ингредиента'
+        verbose_name_plural = 'Количество ингредиентов'
+        constraints = (
+            models.UniqueConstraint(
+                fields=('ingredient', 'recipe',),
+                name='unique ingredient amount',
+            ),
+        )
+
+
+class ShoppingCart(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='carts',
+        verbose_name='Пользователь',
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='carts',
+        verbose_name='Рецепт',
+    )
+
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзина'
+        constraints = (
+            models.UniqueConstraint(fields=['user', 'recipe'],
+                                    name='unique shopping cart'),
+        )

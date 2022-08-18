@@ -1,17 +1,20 @@
 from rest_framework import status
 from rest_framework.generics import ListAPIView, get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Follow, User
 from .serializers import FollowSerializer
+from recipes.pagination import CustomPageNumberPagination
 
 
 class FollowViewSet(APIView):
 
     serializer_class = FollowSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPageNumberPagination
 
     def post(self, request, *args, **kwargs):
         user_id = self.kwargs.get('user_id')
@@ -58,6 +61,7 @@ class FollowListView(ListAPIView):
 
     serializer_class = FollowSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         return User.objects.filter(following__user=self.request.user)
