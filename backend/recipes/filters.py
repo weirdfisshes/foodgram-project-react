@@ -5,13 +5,15 @@ from recipes.models import Recipe
 
 
 class IngredientSearchFilter(SearchFilter):
+    """
+    Фильтр поиска ингредиента по названию.
+    """    
     search_param = 'name'
 
 
 class RecipeFilter(FilterSet):
     """
-    Фильтры для сортировки рецептов по:
-    тегам, нахождению в избранном и корзине.
+    Фильтр для рецептов.
     """
     tags = filters.AllValuesMultipleFilter(field_name='tags__slug')
     is_favorited = filters.BooleanFilter(method='filter_is_favorited')

@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """Пользователь"""
+    """Пользователь."""
     username = models.CharField(
         'Логин',
         max_length=100,
@@ -34,7 +34,7 @@ class User(AbstractUser):
 
 
 class Follow(models.Model):
-    """Подписка"""
+    """Подписка."""
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

@@ -18,12 +18,18 @@ from .pagination import CustomPageNumberPagination
 
 
 class TagViewSet(viewsets.ModelViewSet):
+    """
+    Вьюсет тегов.
+    """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = None
     permission_classes = (ReadOnly,) 
 
 class IngredientViewSet(viewsets.ModelViewSet):
+    """
+    Вьюсет ингридиентов.
+    """
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     pagination_class = None
@@ -32,6 +38,9 @@ class IngredientViewSet(viewsets.ModelViewSet):
     search_fields = ('^name',)
 
 class RecipeViewSet(viewsets.ModelViewSet):
+    """
+    Вьюсет рецептов.
+    """
     queryset = Recipe.objects.all()
     permission_classes = [IsAuthorOrReadOnly]
     filter_backends = [DjangoFilterBackend]
@@ -116,4 +125,4 @@ class RecipeViewSet(viewsets.ModelViewSet):
             height -= 25
         page.showPage()
         page.save()
-        return
+        return response

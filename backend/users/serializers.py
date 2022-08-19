@@ -5,13 +5,18 @@ from .models import Follow, User
 from recipes.models import Recipe
 
 class LiteRecipeSerializer(serializers.ModelSerializer):
+    """
+    Сокращенный сериализатор рецепта.
+    """
     class Meta:
         model = Recipe
-        fields = ('id', 'name', 'image', 'time')
+        fields = ('id', 'name', 'image', 'cooking_time')
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
-
+    """
+    Сериализатор создания пользователя.
+    """
     class Meta:
         model = User
         fields = (
@@ -37,7 +42,9 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 
 class CustomUserSerializer(UserSerializer):
-
+    """
+    Сериализатор пользователя.
+    """
     is_subscribed = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -59,7 +66,9 @@ class CustomUserSerializer(UserSerializer):
 
 
 class FollowSerializer(CustomUserSerializer):
-
+    """
+    Сериализатор подписок.
+    """
     recipes = serializers.SerializerMethodField(read_only=True)
     recipes_count = serializers.SerializerMethodField(read_only=True)
 
