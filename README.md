@@ -7,10 +7,7 @@
 
 ### Как запустить проект.
 
-Клонировать репозиторий, 
-
-
-Установите Docker. Перейдите в папку infra и соберите образ:
+Клонируйте репозиторий, выполните команды:
 
 ```
 docker-compose build
@@ -18,7 +15,7 @@ docker-compose build
 ```
 docker-compose up -d
 ```
-Выполните миграции
+Выполните миграции:
 ```
 docker-compose exec web python manage.py migrate 
 ```
@@ -29,10 +26,14 @@ docker-compose exec web python manage.py migrate
 docker-compose exec web python manage.py createsuperuser
 ```
 
-Соберите статику
+Соберите статику:
 
 ```
 docker-compose exec web python manage.py collectstatic --no-input
+```
+загрузите данные в БД из файла postgres.dump, предварительно сохранив его в контейнере:
+```
+docker-compose exec db -u postgres psql -d postgres -f postgres.dump 
 ```
 
 После этого проект будет доступен по ссылке:
@@ -41,5 +42,8 @@ docker-compose exec web python manage.py collectstatic --no-input
 http://localhost/
 ```
 
-
 ### Примеры запросов
+
+```
+Можно посмотреть по адресу http://localhost/api/docs/
+```
