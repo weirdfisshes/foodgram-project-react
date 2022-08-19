@@ -43,7 +43,8 @@ http://localhost/
 ```
 
 ### Примеры запросов
+Можно посмотреть по адресу:
 
 ```
-Можно посмотреть по адресу http://localhost/api/docs/
+http://localhost/api/docs/
 ```
