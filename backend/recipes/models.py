@@ -1,9 +1,11 @@
 from django.db import models
 from users.models import User
 
+from .validators import validate_tag_color
+
 
 class Ingredient(models.Model):
-    """Ингридиент."""
+    """Ингредиент."""
     name = models.CharField(
         'Название ингридиента',
         max_length=100,
@@ -30,6 +32,7 @@ class Tag(models.Model):
     color = models.CharField(
         'Цветовой HEX-код',
         max_length=7,
+        validators =[validate_tag_color],
         unique=True,
     )
     slug = models.SlugField(

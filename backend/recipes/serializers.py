@@ -11,7 +11,6 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
-
     
 class IngredientSerializer(serializers.ModelSerializer):
     """
@@ -103,32 +102,32 @@ class RecipeSerializer(serializers.ModelSerializer):
             ingredient_id = ingredient['id']
             if ingredient_id in ingredients_list:
                 raise serializers.ValidationError({
-                    'ingredients': 'Ингредиенты должны быть уникальными!'
+                    'ingredients': 'Ингредиенты не должны повторяться'
                 })
             ingredients_list.append(ingredient_id)
             amount = ingredient['amount']
             if int(amount) <= 0:
                 raise serializers.ValidationError({
-                    'amount': 'Количество ингредиента должно быть больше нуля!'
+                    'amount': 'Количество ингредиента должно быть больше нуля'
                 })
 
         tags = data['tags']
         if not tags:
             raise serializers.ValidationError({
-                'tags': 'Нужно выбрать хотя бы один тэг!'
+                'tags': 'Не выбран ни один тег'
             })
         tags_list = []
         for tag in tags:
             if tag in tags_list:
                 raise serializers.ValidationError({
-                    'tags': 'Тэги должны быть уникальными!'
+                    'tags': 'Теги не должны повторяться'
                 })
             tags_list.append(tag)
 
         cooking_time = data['cooking_time']
         if int(cooking_time) <= 0:
             raise serializers.ValidationError({
-                'cooking_time': 'Время приготовления должно быть больше 0!'
+                'cooking_time': 'Время приготовления должно быть больше 0'
             })
         return data
 
@@ -182,7 +181,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
         recipe = data['recipe']
         if Favorite.objects.filter(user=request.user, recipe=recipe).exists():
             raise serializers.ValidationError({
-                'status': 'Рецепт уже есть в избранном!'
+                'status': 'Рецепт уже добавлен в избранное'
             })
         return data
 
