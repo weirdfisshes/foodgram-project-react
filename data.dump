@@ -1,0 +1,2033 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Drop databases (except postgres and template1)
+--
+
+
+
+
+
+--
+-- Drop roles
+--
+
+DROP ROLE postgres;
+
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'md53175bce1d3201d16594cebf9d7eb3f9d';
+
+
+
+
+
+
+--
+-- Databases
+--
+
+--
+-- Database "template1" dump
+--
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.0
+-- Dumped by pg_dump version 13.0
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+UPDATE pg_catalog.pg_database SET datistemplate = false WHERE datname = 'template1';
+DROP DATABASE template1;
+--
+-- Name: template1; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE template1 WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE template1 OWNER TO postgres;
+
+\connect template1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DATABASE template1; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE template1 IS 'default template for new databases';
+
+
+--
+-- Name: template1; Type: DATABASE PROPERTIES; Schema: -; Owner: postgres
+--
+
+ALTER DATABASE template1 IS_TEMPLATE = true;
+
+
+\connect template1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DATABASE template1; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE CONNECT,TEMPORARY ON DATABASE template1 FROM PUBLIC;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "postgres" dump
+--
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.0
+-- Dumped by pg_dump version 13.0
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE postgres;
+--
+-- Name: postgres; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE postgres WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE postgres OWNER TO postgres;
+
+\connect postgres
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO postgres;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO postgres;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO postgres;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: authtoken_token; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.authtoken_token (
+    key character varying(40) NOT NULL,
+    created timestamp with time zone NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.authtoken_token OWNER TO postgres;
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO postgres;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO postgres;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO postgres;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO postgres;
+
+--
+-- Name: recipes_favorite; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recipes_favorite (
+    id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.recipes_favorite OWNER TO postgres;
+
+--
+-- Name: recipes_favorite_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.recipes_favorite_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_favorite_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_favorite_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.recipes_favorite_id_seq OWNED BY public.recipes_favorite.id;
+
+
+--
+-- Name: recipes_ingredient; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recipes_ingredient (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    measurement_unit character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.recipes_ingredient OWNER TO postgres;
+
+--
+-- Name: recipes_ingredient_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.recipes_ingredient_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_ingredient_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_ingredient_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.recipes_ingredient_id_seq OWNED BY public.recipes_ingredient.id;
+
+
+--
+-- Name: recipes_recipe; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recipes_recipe (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    image character varying(100) NOT NULL,
+    text text NOT NULL,
+    cooking_time smallint NOT NULL,
+    author_id integer NOT NULL,
+    CONSTRAINT recipes_recipe_cooking_time_check CHECK ((cooking_time >= 0))
+);
+
+
+ALTER TABLE public.recipes_recipe OWNER TO postgres;
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.recipes_recipe_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_recipe_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.recipes_recipe_id_seq OWNED BY public.recipes_recipe.id;
+
+
+--
+-- Name: recipes_recipe_tags; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recipes_recipe_tags (
+    id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE public.recipes_recipe_tags OWNER TO postgres;
+
+--
+-- Name: recipes_recipe_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.recipes_recipe_tags_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_recipe_tags_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_recipe_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.recipes_recipe_tags_id_seq OWNED BY public.recipes_recipe_tags.id;
+
+
+--
+-- Name: recipes_recipeingredients; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recipes_recipeingredients (
+    id integer NOT NULL,
+    amount smallint NOT NULL,
+    ingredient_id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    CONSTRAINT recipes_recipeingredients_amount_check CHECK ((amount >= 0))
+);
+
+
+ALTER TABLE public.recipes_recipeingredients OWNER TO postgres;
+
+--
+-- Name: recipes_recipeingredients_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.recipes_recipeingredients_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_recipeingredients_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_recipeingredients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.recipes_recipeingredients_id_seq OWNED BY public.recipes_recipeingredients.id;
+
+
+--
+-- Name: recipes_shoppingcart; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recipes_shoppingcart (
+    id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.recipes_shoppingcart OWNER TO postgres;
+
+--
+-- Name: recipes_shoppingcart_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.recipes_shoppingcart_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_shoppingcart_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_shoppingcart_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.recipes_shoppingcart_id_seq OWNED BY public.recipes_shoppingcart.id;
+
+
+--
+-- Name: recipes_tag; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recipes_tag (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    color character varying(7) NOT NULL,
+    slug character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.recipes_tag OWNER TO postgres;
+
+--
+-- Name: recipes_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.recipes_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_tag_id_seq OWNER TO postgres;
+
+--
+-- Name: recipes_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.recipes_tag_id_seq OWNED BY public.recipes_tag.id;
+
+
+--
+-- Name: users_follow; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_follow (
+    id integer NOT NULL,
+    author_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_follow OWNER TO postgres;
+
+--
+-- Name: users_follow_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_follow_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_follow_id_seq OWNER TO postgres;
+
+--
+-- Name: users_follow_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_follow_id_seq OWNED BY public.users_follow.id;
+
+
+--
+-- Name: users_user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    username character varying(100) NOT NULL,
+    email character varying(254) NOT NULL,
+    first_name character varying(100) NOT NULL,
+    last_name character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.users_user OWNER TO postgres;
+
+--
+-- Name: users_user_groups; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_groups OWNER TO postgres;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_user_groups_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_groups_id_seq OWNER TO postgres;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_user_groups_id_seq OWNED BY public.users_user_groups.id;
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_id_seq OWNER TO postgres;
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users_user.id;
+
+
+--
+-- Name: users_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_user_permissions OWNER TO postgres;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_user_user_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_user_permissions_id_seq OWNER TO postgres;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_user_user_permissions_id_seq OWNED BY public.users_user_user_permissions.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: recipes_favorite id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_favorite ALTER COLUMN id SET DEFAULT nextval('public.recipes_favorite_id_seq'::regclass);
+
+
+--
+-- Name: recipes_ingredient id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_ingredient ALTER COLUMN id SET DEFAULT nextval('public.recipes_ingredient_id_seq'::regclass);
+
+
+--
+-- Name: recipes_recipe id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe ALTER COLUMN id SET DEFAULT nextval('public.recipes_recipe_id_seq'::regclass);
+
+
+--
+-- Name: recipes_recipe_tags id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags ALTER COLUMN id SET DEFAULT nextval('public.recipes_recipe_tags_id_seq'::regclass);
+
+
+--
+-- Name: recipes_recipeingredients id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipeingredients ALTER COLUMN id SET DEFAULT nextval('public.recipes_recipeingredients_id_seq'::regclass);
+
+
+--
+-- Name: recipes_shoppingcart id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_shoppingcart ALTER COLUMN id SET DEFAULT nextval('public.recipes_shoppingcart_id_seq'::regclass);
+
+
+--
+-- Name: recipes_tag id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_tag ALTER COLUMN id SET DEFAULT nextval('public.recipes_tag_id_seq'::regclass);
+
+
+--
+-- Name: users_follow id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_follow ALTER COLUMN id SET DEFAULT nextval('public.users_follow_id_seq'::regclass);
+
+
+--
+-- Name: users_user id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user ALTER COLUMN id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+
+
+--
+-- Name: users_user_groups id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_groups ALTER COLUMN id SET DEFAULT nextval('public.users_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: users_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.users_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add content type	4	add_contenttype
+14	Can change content type	4	change_contenttype
+15	Can delete content type	4	delete_contenttype
+16	Can view content type	4	view_contenttype
+17	Can add session	5	add_session
+18	Can change session	5	change_session
+19	Can delete session	5	delete_session
+20	Can view session	5	view_session
+21	Can add Token	6	add_token
+22	Can change Token	6	change_token
+23	Can delete Token	6	delete_token
+24	Can view Token	6	view_token
+25	Can add token	7	add_tokenproxy
+26	Can change token	7	change_tokenproxy
+27	Can delete token	7	delete_tokenproxy
+28	Can view token	7	view_tokenproxy
+29	Can add Пользователь	8	add_user
+30	Can change Пользователь	8	change_user
+31	Can delete Пользователь	8	delete_user
+32	Can view Пользователь	8	view_user
+33	Can add Подписка	9	add_follow
+34	Can change Подписка	9	change_follow
+35	Can delete Подписка	9	delete_follow
+36	Can view Подписка	9	view_follow
+37	Can add Избранное	10	add_favorite
+38	Can change Избранное	10	change_favorite
+39	Can delete Избранное	10	delete_favorite
+40	Can view Избранное	10	view_favorite
+41	Can add Ингридиент	11	add_ingredient
+42	Can change Ингридиент	11	change_ingredient
+43	Can delete Ингридиент	11	delete_ingredient
+44	Can view Ингридиент	11	view_ingredient
+45	Can add Рецепт	12	add_recipe
+46	Can change Рецепт	12	change_recipe
+47	Can delete Рецепт	12	delete_recipe
+48	Can view Рецепт	12	view_recipe
+49	Can add Количество ингредиента	13	add_recipeingredients
+50	Can change Количество ингредиента	13	change_recipeingredients
+51	Can delete Количество ингредиента	13	delete_recipeingredients
+52	Can view Количество ингредиента	13	view_recipeingredients
+53	Can add Тег	14	add_tag
+54	Can change Тег	14	change_tag
+55	Can delete Тег	14	delete_tag
+56	Can view Тег	14	view_tag
+57	Can add Корзина	15	add_shoppingcart
+58	Can change Корзина	15	change_shoppingcart
+59	Can delete Корзина	15	delete_shoppingcart
+60	Can view Корзина	15	view_shoppingcart
+\.
+
+
+--
+-- Data for Name: authtoken_token; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.authtoken_token (key, created, user_id) FROM stdin;
+c0c5486ee6f09b154a4f45e2f2c0584cce4de43c	2022-08-19 13:45:21.784158+00	4
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2022-08-19 13:37:02.161659+00	1	колбаса, кусочек	1	[{"added": {}}]	11	1
+2	2022-08-19 13:37:07.779553+00	2	сыр, кусочек	1	[{"added": {}}]	11	1
+3	2022-08-19 13:37:12.960592+00	3	хлеб, кусочек	1	[{"added": {}}]	11	1
+4	2022-08-19 13:37:25.554506+00	4	яйцо, шт	1	[{"added": {}}]	11	1
+5	2022-08-19 13:37:32.334668+00	5	молоко, стакан	1	[{"added": {}}]	11	1
+6	2022-08-19 13:37:44.731848+00	6	масло сливочное, ложка	1	[{"added": {}}]	11	1
+7	2022-08-19 13:38:05.380096+00	1	breakfast	1	[{"added": {}}]	14	1
+8	2022-08-19 13:38:22.995923+00	2	dinner	1	[{"added": {}}]	14	1
+9	2022-08-19 13:38:45.007158+00	3	uzhin	1	[{"added": {}}]	14	1
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	contenttypes	contenttype
+5	sessions	session
+6	authtoken	token
+7	authtoken	tokenproxy
+8	users	user
+9	users	follow
+10	recipes	favorite
+11	recipes	ingredient
+12	recipes	recipe
+13	recipes	recipeingredients
+14	recipes	tag
+15	recipes	shoppingcart
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2022-08-19 13:35:25.668773+00
+2	contenttypes	0002_remove_content_type_name	2022-08-19 13:35:25.68543+00
+3	auth	0001_initial	2022-08-19 13:35:25.763627+00
+4	auth	0002_alter_permission_name_max_length	2022-08-19 13:35:25.799829+00
+5	auth	0003_alter_user_email_max_length	2022-08-19 13:35:25.813329+00
+6	auth	0004_alter_user_username_opts	2022-08-19 13:35:25.824543+00
+7	auth	0005_alter_user_last_login_null	2022-08-19 13:35:25.835258+00
+8	auth	0006_require_contenttypes_0002	2022-08-19 13:35:25.8392+00
+9	auth	0007_alter_validators_add_error_messages	2022-08-19 13:35:25.850427+00
+10	auth	0008_alter_user_username_max_length	2022-08-19 13:35:25.861599+00
+11	auth	0009_alter_user_last_name_max_length	2022-08-19 13:35:25.872313+00
+12	auth	0010_alter_group_name_max_length	2022-08-19 13:35:25.890926+00
+13	auth	0011_update_proxy_permissions	2022-08-19 13:35:25.904037+00
+14	users	0001_initial	2022-08-19 13:35:25.976418+00
+15	admin	0001_initial	2022-08-19 13:35:26.052764+00
+16	admin	0002_logentry_remove_auto_add	2022-08-19 13:35:26.083759+00
+17	admin	0003_logentry_add_action_flag_choices	2022-08-19 13:35:26.099951+00
+18	authtoken	0001_initial	2022-08-19 13:35:26.126011+00
+19	authtoken	0002_auto_20160226_1747	2022-08-19 13:35:26.186964+00
+20	authtoken	0003_tokenproxy	2022-08-19 13:35:26.195251+00
+21	recipes	0001_initial	2022-08-19 13:35:26.267271+00
+22	recipes	0002_auto_20220819_1201	2022-08-19 13:35:26.485529+00
+23	recipes	0003_auto_20220819_1210	2022-08-19 13:35:26.739123+00
+24	recipes	0004_auto_20220819_1938	2022-08-19 13:35:26.757025+00
+25	sessions	0001_initial	2022-08-19 13:35:26.772247+00
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+bnnh6p7g13zuck8n1o7t0oq43f29q6t3	ZmE5YzJmYTg4MWUyNzIyMThjMGIxZjJlYmIzMzhjYzQ3YzY1NjcxYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJkN2NiOTJlOWE1NzEzOTQzM2E5YjZhZDQ4MmQyNDE4NzRkYWE3OWNkIn0=	2022-09-02 13:36:49.747882+00
+\.
+
+
+--
+-- Data for Name: recipes_favorite; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recipes_favorite (id, recipe_id, user_id) FROM stdin;
+1	1	2
+2	2	4
+\.
+
+
+--
+-- Data for Name: recipes_ingredient; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recipes_ingredient (id, name, measurement_unit) FROM stdin;
+1	колбаса	кусочек
+2	сыр	кусочек
+3	хлеб	кусочек
+4	яйцо	шт
+5	молоко	стакан
+6	масло сливочное	ложка
+\.
+
+
+--
+-- Data for Name: recipes_recipe; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recipes_recipe (id, name, image, text, cooking_time, author_id) FROM stdin;
+1	Бутерброд по-программистски	recipes/fba31894-3d03-4a5e-b0b4-91a61d1a887a.jpg	Положите на хлеб сыр и колбасу, вы великолепны	10	2
+2	Омлет	recipes/2d1c801e-fb86-44e9-896a-98f0818c2473.jpg	Все смешайте и обжарьте	15	3
+3	Молоко с хлебом	recipes/cc87eec9-50de-45cd-b361-8df299a152ff.jpg	Попейте молока с хлебом	2	4
+\.
+
+
+--
+-- Data for Name: recipes_recipe_tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recipes_recipe_tags (id, recipe_id, tag_id) FROM stdin;
+1	1	1
+2	2	1
+3	2	2
+4	2	3
+5	3	1
+6	3	2
+7	3	3
+\.
+
+
+--
+-- Data for Name: recipes_recipeingredients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recipes_recipeingredients (id, amount, ingredient_id, recipe_id) FROM stdin;
+1	1	3	1
+2	1	2	1
+3	1	1	1
+4	3	4	2
+5	1	5	2
+6	1	1	2
+7	1	5	3
+8	1	3	3
+\.
+
+
+--
+-- Data for Name: recipes_shoppingcart; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recipes_shoppingcart (id, recipe_id, user_id) FROM stdin;
+1	1	2
+2	1	3
+3	2	3
+4	1	4
+5	2	4
+6	3	4
+\.
+
+
+--
+-- Data for Name: recipes_tag; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recipes_tag (id, name, color, slug) FROM stdin;
+1	завтрак	#110000	breakfast
+2	обед	#001100	dinner
+3	ужин	#000011	uzhin
+\.
+
+
+--
+-- Data for Name: users_follow; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_follow (id, author_id, user_id) FROM stdin;
+1	3	4
+2	2	4
+\.
+
+
+--
+-- Data for Name: users_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_user (id, password, last_login, is_superuser, is_staff, is_active, date_joined, username, email, first_name, last_name) FROM stdin;
+1	pbkdf2_sha256$150000$R0P9khJ2vMt5$U0HL/qj9wpsEudPoRlXekoo2cO0865tPErDp0zfcmRg=	2022-08-19 13:36:49.742538+00	t	t	t	2022-08-19 13:35:44.778064+00	a	a@ya.ru	a	a
+2	pbkdf2_sha256$150000$q2YLoRiszUoe$FaznxCszcAg/E0o5mgKI/l6sLBcXOwWbYup5t1f+cw8=	2022-08-19 13:41:39.259765+00	f	f	t	2022-08-19 13:40:41.54465+00	zavtrak	user@ya.ru	Иван	Завтраков
+3	pbkdf2_sha256$150000$6rztA2PwizIY$/N4+GyG3X+30CwYH1+maDY2mX2ilf58LFDcw43M7IrQ=	2022-08-19 13:43:56.006724+00	f	f	t	2022-08-19 13:41:08.316728+00	obedoff	user2@ya.ru	Павел	Обедов
+4	pbkdf2_sha256$150000$AZz4NVQ0J9P8$nq6BhzfINOVwza9v5dOSMu/HH9mG3G3/31LAROv7jHU=	2022-08-19 13:45:21.789107+00	f	f	t	2022-08-19 13:41:31.673231+00	uzhhh	user3@ya.ru	Петр	Ужинов
+\.
+
+
+--
+-- Data for Name: users_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 60, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 9, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 15, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
+
+
+--
+-- Name: recipes_favorite_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.recipes_favorite_id_seq', 2, true);
+
+
+--
+-- Name: recipes_ingredient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.recipes_ingredient_id_seq', 6, true);
+
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.recipes_recipe_id_seq', 3, true);
+
+
+--
+-- Name: recipes_recipe_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.recipes_recipe_tags_id_seq', 7, true);
+
+
+--
+-- Name: recipes_recipeingredients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.recipes_recipeingredients_id_seq', 8, true);
+
+
+--
+-- Name: recipes_shoppingcart_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.recipes_shoppingcart_id_seq', 6, true);
+
+
+--
+-- Name: recipes_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.recipes_tag_id_seq', 3, true);
+
+
+--
+-- Name: users_follow_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_follow_id_seq', 2, true);
+
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 4, true);
+
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: authtoken_token authtoken_token_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: authtoken_token authtoken_token_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: recipes_favorite recipes_favorite_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_favorite
+    ADD CONSTRAINT recipes_favorite_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_ingredient recipes_ingredient_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_ingredient
+    ADD CONSTRAINT recipes_ingredient_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_recipe recipes_recipe_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe
+    ADD CONSTRAINT recipes_recipe_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tags_recipe_id_tag_id_233281ac_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tags_recipe_id_tag_id_233281ac_uniq UNIQUE (recipe_id, tag_id);
+
+
+--
+-- Name: recipes_recipeingredients recipes_recipeingredients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipeingredients
+    ADD CONSTRAINT recipes_recipeingredients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_shoppingcart recipes_shoppingcart_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_shoppingcart
+    ADD CONSTRAINT recipes_shoppingcart_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_tag recipes_tag_color_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_color_key UNIQUE (color);
+
+
+--
+-- Name: recipes_tag recipes_tag_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_name_key UNIQUE (name);
+
+
+--
+-- Name: recipes_tag recipes_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_tag recipes_tag_slug_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_slug_key UNIQUE (slug);
+
+
+--
+-- Name: recipes_favorite unique favorite; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_favorite
+    ADD CONSTRAINT "unique favorite" UNIQUE (user_id, recipe_id);
+
+
+--
+-- Name: users_follow unique follow; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT "unique follow" UNIQUE (user_id, author_id);
+
+
+--
+-- Name: recipes_recipeingredients unique ingredient amount; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipeingredients
+    ADD CONSTRAINT "unique ingredient amount" UNIQUE (ingredient_id, recipe_id);
+
+
+--
+-- Name: recipes_shoppingcart unique shopping cart; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_shoppingcart
+    ADD CONSTRAINT "unique shopping cart" UNIQUE (user_id, recipe_id);
+
+
+--
+-- Name: users_follow users_follow_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT users_follow_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user users_user_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_email_key UNIQUE (email);
+
+
+--
+-- Name: users_user_groups users_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_group_id_b88eab82_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_group_id_b88eab82_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: users_user users_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_permission_id_43338c45_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_permission_id_43338c45_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: users_user users_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_username_key UNIQUE (username);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: authtoken_token_key_10f0b77e_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX authtoken_token_key_10f0b77e_like ON public.authtoken_token USING btree (key varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: recipes_favorite_recipe_id_288529df; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_favorite_recipe_id_288529df ON public.recipes_favorite USING btree (recipe_id);
+
+
+--
+-- Name: recipes_favorite_user_id_dd4f6854; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_favorite_user_id_dd4f6854 ON public.recipes_favorite USING btree (user_id);
+
+
+--
+-- Name: recipes_recipe_author_id_7274f74b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_recipe_author_id_7274f74b ON public.recipes_recipe USING btree (author_id);
+
+
+--
+-- Name: recipes_recipe_tags_recipe_id_e15a4132; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_recipe_tags_recipe_id_e15a4132 ON public.recipes_recipe_tags USING btree (recipe_id);
+
+
+--
+-- Name: recipes_recipe_tags_tag_id_6fe328c4; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_recipe_tags_tag_id_6fe328c4 ON public.recipes_recipe_tags USING btree (tag_id);
+
+
+--
+-- Name: recipes_recipeingredients_ingredient_id_4fea9917; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_recipeingredients_ingredient_id_4fea9917 ON public.recipes_recipeingredients USING btree (ingredient_id);
+
+
+--
+-- Name: recipes_recipeingredients_recipe_id_2ae3da78; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_recipeingredients_recipe_id_2ae3da78 ON public.recipes_recipeingredients USING btree (recipe_id);
+
+
+--
+-- Name: recipes_shoppingcart_recipe_id_7b01d980; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_shoppingcart_recipe_id_7b01d980 ON public.recipes_shoppingcart USING btree (recipe_id);
+
+
+--
+-- Name: recipes_shoppingcart_user_id_9cf94f11; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_shoppingcart_user_id_9cf94f11 ON public.recipes_shoppingcart USING btree (user_id);
+
+
+--
+-- Name: recipes_tag_color_80798f0a_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_tag_color_80798f0a_like ON public.recipes_tag USING btree (color varchar_pattern_ops);
+
+
+--
+-- Name: recipes_tag_name_fdbc724f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_tag_name_fdbc724f_like ON public.recipes_tag USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: recipes_tag_slug_baa21000_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX recipes_tag_slug_baa21000_like ON public.recipes_tag USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: users_follow_author_id_c48003a4; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_follow_author_id_c48003a4 ON public.users_follow USING btree (author_id);
+
+
+--
+-- Name: users_follow_user_id_e66dc3cf; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_follow_user_id_e66dc3cf ON public.users_follow USING btree (user_id);
+
+
+--
+-- Name: users_user_email_243f6e77_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_user_email_243f6e77_like ON public.users_user USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: users_user_groups_group_id_9afc8d0e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_user_groups_group_id_9afc8d0e ON public.users_user_groups USING btree (group_id);
+
+
+--
+-- Name: users_user_groups_user_id_5f6f5a90; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_user_groups_user_id_5f6f5a90 ON public.users_user_groups USING btree (user_id);
+
+
+--
+-- Name: users_user_user_permissions_permission_id_0b93982e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_user_user_permissions_permission_id_0b93982e ON public.users_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: users_user_user_permissions_user_id_20aca447; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_user_user_permissions_user_id_20aca447 ON public.users_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: users_user_username_06e46fe6_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX users_user_username_06e46fe6_like ON public.users_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: authtoken_token authtoken_token_user_id_35299eff_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_35299eff_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_favorite recipes_favorite_recipe_id_288529df_fk_recipes_recipe_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_favorite
+    ADD CONSTRAINT recipes_favorite_recipe_id_288529df_fk_recipes_recipe_id FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_favorite recipes_favorite_user_id_dd4f6854_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_favorite
+    ADD CONSTRAINT recipes_favorite_user_id_dd4f6854_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipe recipes_recipe_author_id_7274f74b_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe
+    ADD CONSTRAINT recipes_recipe_author_id_7274f74b_fk_users_user_id FOREIGN KEY (author_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tags_recipe_id_e15a4132_fk_recipes_recipe_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tags_recipe_id_e15a4132_fk_recipes_recipe_id FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tags_tag_id_6fe328c4_fk_recipes_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tags_tag_id_6fe328c4_fk_recipes_tag_id FOREIGN KEY (tag_id) REFERENCES public.recipes_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipeingredients recipes_recipeingred_ingredient_id_4fea9917_fk_recipes_i; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipeingredients
+    ADD CONSTRAINT recipes_recipeingred_ingredient_id_4fea9917_fk_recipes_i FOREIGN KEY (ingredient_id) REFERENCES public.recipes_ingredient(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipeingredients recipes_recipeingred_recipe_id_2ae3da78_fk_recipes_r; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_recipeingredients
+    ADD CONSTRAINT recipes_recipeingred_recipe_id_2ae3da78_fk_recipes_r FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_shoppingcart recipes_shoppingcart_recipe_id_7b01d980_fk_recipes_recipe_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_shoppingcart
+    ADD CONSTRAINT recipes_shoppingcart_recipe_id_7b01d980_fk_recipes_recipe_id FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_shoppingcart recipes_shoppingcart_user_id_9cf94f11_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recipes_shoppingcart
+    ADD CONSTRAINT recipes_shoppingcart_user_id_9cf94f11_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_follow users_follow_author_id_c48003a4_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT users_follow_author_id_c48003a4_fk_users_user_id FOREIGN KEY (author_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_follow users_follow_user_id_e66dc3cf_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT users_follow_user_id_e66dc3cf_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_group_id_9afc8d0e_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_group_id_9afc8d0e_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_5f6f5a90_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_5f6f5a90_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_perm_permission_id_0b93982e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_perm_permission_id_0b93982e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_20aca447_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_20aca447_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
