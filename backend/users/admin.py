@@ -10,6 +10,7 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ('username', 'email')
     empty_value_display = '-empty-'
 
+
 @admin.register(Follow)
 class FollowAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'author')

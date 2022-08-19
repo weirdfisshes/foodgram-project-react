@@ -1,13 +1,12 @@
 from django_filters.rest_framework import FilterSet, filters
-from rest_framework.filters import SearchFilter
-
 from recipes.models import Recipe
+from rest_framework.filters import SearchFilter
 
 
 class IngredientSearchFilter(SearchFilter):
     """
     Фильтр поиска ингредиента по названию.
-    """    
+    """
     search_param = 'name'
 
 

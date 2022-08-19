@@ -1,8 +1,10 @@
-from rest_framework import serializers
 from drf_extra_fields.fields import Base64ImageField
-
-from .models import Favorite, Ingredient, Recipe, Tag, RecipeIngredients, ShoppingCart
+from rest_framework import serializers
 from users.serializers import CustomUserSerializer
+
+from .models import (Favorite, Ingredient, Recipe, RecipeIngredients,
+                     ShoppingCart, Tag)
+
 
 class TagSerializer(serializers.ModelSerializer):
     """
@@ -11,7 +13,8 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
-    
+
+
 class IngredientSerializer(serializers.ModelSerializer):
     """
     Сериализатор ингридиента.
@@ -21,6 +24,7 @@ class IngredientSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = '__all__',
 
+
 class LiteRecipeSerializer(serializers.ModelSerializer):
     """
     Сокращенный сериализатор рецепта.
@@ -28,6 +32,7 @@ class LiteRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ('id', 'name', 'image', 'cooking_time')
+
 
 class RecipeIngredientsSerializer(serializers.ModelSerializer):
     """
@@ -43,6 +48,7 @@ class RecipeIngredientsSerializer(serializers.ModelSerializer):
         model = RecipeIngredients
         fields = ('id', 'name', 'measurement_unit', 'amount')
 
+
 class RecipeListSerializer(serializers.ModelSerializer):
     """
     Сериализатор отображения рецептов.
@@ -52,7 +58,6 @@ class RecipeListSerializer(serializers.ModelSerializer):
     ingredients = serializers.SerializerMethodField(read_only=True)
     is_favorited = serializers.SerializerMethodField(read_only=True)
     is_in_shopping_cart = serializers.SerializerMethodField(read_only=True)
-
 
     class Meta:
         model = Recipe
@@ -74,6 +79,7 @@ class RecipeListSerializer(serializers.ModelSerializer):
             return False
         return ShoppingCart.objects.filter(
             user=request.user, recipe=obj).exists()
+
 
 class AddIngredientSerializer(serializers.ModelSerializer):
     """

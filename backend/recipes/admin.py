@@ -1,7 +1,8 @@
 from django.contrib import admin
 
-from .models import (Favorite, Ingredient, RecipeIngredients, Recipe,
+from .models import (Favorite, Ingredient, Recipe, RecipeIngredients,
                      ShoppingCart, Tag)
+
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
@@ -22,6 +23,7 @@ class RecipeAdmin(admin.ModelAdmin):
     @staticmethod
     def amount_ingredients(obj):
         return "\n".join([i[0] for i in obj.ingredients.values_list('name')])
+
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):

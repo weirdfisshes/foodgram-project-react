@@ -1,17 +1,19 @@
-from rest_framework import viewsets
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from .models import Ingredient, Recipe, Tag, Favorite, ShoppingCart, RecipeIngredients
-from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer, RecipeListSerializer, FavoriteSerializer, ShoppingCartSerializer
-from .permissions import ReadOnly, IsAuthorOrReadOnly
 from .filters import IngredientSearchFilter, RecipeFilter
+from .models import (Favorite, Ingredient, Recipe, RecipeIngredients,
+                     ShoppingCart, Tag)
 from .pagination import CustomPageNumberPagination
+from .permissions import IsAuthorOrReadOnly, ReadOnly
+from .serializers import (FavoriteSerializer, IngredientSerializer,
+                          RecipeListSerializer, RecipeSerializer,
+                          ShoppingCartSerializer, TagSerializer)
 
 
 class TagViewSet(viewsets.ModelViewSet):
@@ -21,7 +23,8 @@ class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = None
-    permission_classes = (ReadOnly,) 
+    permission_classes = (ReadOnly,)
+
 
 class IngredientViewSet(viewsets.ModelViewSet):
     """
@@ -33,6 +36,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     permission_classes = (ReadOnly,)
     filter_backends = [IngredientSearchFilter]
     search_fields = ('^name',)
+
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """
@@ -87,7 +91,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return self.delete_method_for_actions(
             request=request, pk=pk, model=ShoppingCart)
 
-
     @action(detail=False, methods=['get'],
             permission_classes=[IsAuthenticated])
     def download_shopping_cart(self, request):
@@ -110,5 +113,5 @@ class RecipeViewSet(viewsets.ModelViewSet):
                       f" {value['measurement_unit']}\n"
                       for item, value in shopping_list.items()])
         response = HttpResponse(main_list, 'Content-Type: text/plain')
-        response['Content-Disposition'] = 'attachment; filename="Списокпокупок.txt"'
+        response['Content-Disposition'] = 'attachment; filename="Список.txt"'
         return response

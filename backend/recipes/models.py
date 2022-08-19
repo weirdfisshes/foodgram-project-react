@@ -22,6 +22,7 @@ class Ingredient(models.Model):
     def __str__(self):
         return f'{self.name}, {self.measurement_unit}'
 
+
 class Tag(models.Model):
     """Тег."""
     name = models.CharField(
@@ -32,7 +33,7 @@ class Tag(models.Model):
     color = models.CharField(
         'Цветовой HEX-код',
         max_length=7,
-        validators =[validate_tag_color],
+        validators=[validate_tag_color],
         unique=True,
     )
     slug = models.SlugField(
@@ -47,6 +48,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.slug
+
 
 class Recipe(models.Model):
     """Рецепт."""
@@ -80,7 +82,6 @@ class Recipe(models.Model):
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления'
     )
-    
 
     class Meta:
         verbose_name = 'Рецепт'
