@@ -91,15 +91,16 @@ class FollowSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         user = self.context.get('request').user
-        author = data.get('username')
+        author = self.context.get('author')
         follow = Follow.objects.filter(user=user, author=author)
+        method = self.context.get('request').method
         if user == author:
             raise serializers.ValidationError(
                 'Нельзя подписаться на самого себя')
-        if self.context.get('request').method == 'POST' and follow.exists():
+        if method == 'POST' and follow.exists():
             raise serializers.ValidationError(
                 'Вы уже подписаны на этого автора')
-        if self.context.get('request').method == 'DELETE' and not follow.exists():
+        if method == 'DELETE' and not follow.exists():
             raise serializers.ValidationError(
                 'Вы не подписаны на этого автора')
         return data
