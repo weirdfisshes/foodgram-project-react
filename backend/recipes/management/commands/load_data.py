@@ -1,7 +1,11 @@
 from csv import reader
 
 from django.core.management.base import BaseCommand
+
 from recipes.models import Ingredient
+
+
+SIZE_OF_ROW = 2
 
 
 class Command(BaseCommand):
@@ -13,7 +17,7 @@ class Command(BaseCommand):
                 encoding='UTF-8'
         ) as ingredients:
             for row in reader(ingredients):
-                if len(row) == 2:
+                if len(row) == SIZE_OF_ROW:
                     Ingredient.objects.get_or_create(
                         name=row[0], unit=row[1],
                     )

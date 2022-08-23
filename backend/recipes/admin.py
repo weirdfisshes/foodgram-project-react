@@ -1,7 +1,9 @@
 from django.contrib import admin
 
-from .models import (Favorite, Ingredient, Recipe, RecipeIngredients,
-                     ShoppingCart, Tag)
+from .models import (
+    Favorite, Ingredient, Recipe,
+    RecipeIngredients, ShoppingCart, Tag
+)
 
 
 @admin.register(Recipe)
@@ -15,14 +17,17 @@ class RecipeAdmin(admin.ModelAdmin):
     @staticmethod
     def amount_favorites(obj):
         return obj.favorites.count()
+    amount_favorites.short_description = 'Всего избранных: '
 
     @staticmethod
     def amount_tags(obj):
-        return "\n".join([i[0] for i in obj.tags.values_list('name')])
+        return '\n'.join([i[0] for i in obj.tags.values_list('name')])
+    amount_tags.short_description = 'Всего тегов: '
 
     @staticmethod
     def amount_ingredients(obj):
-        return "\n".join([i[0] for i in obj.ingredients.values_list('name')])
+        return '\n'.join([i[0] for i in obj.ingredients.values_list('name')])
+    amount_ingredients.short_description = 'Всего ингредиентов: '
 
 
 @admin.register(Tag)

@@ -1,33 +1,33 @@
 from django.db import models
-from users.models import User
 
 from .validators import validate_tag_color
+from users.models import User
 
 
 class Ingredient(models.Model):
-    """Ингредиент."""
+    '''Ингредиент.'''
     name = models.CharField(
-        'Название ингридиента',
+        'Название Ингредиента',
         max_length=100,
     )
     measurement_unit = models.CharField(
         'Единица измерения',
-        max_length=100,
+        max_length=20,
     )
 
     class Meta:
-        verbose_name = 'Ингридиент'
-        verbose_name_plural = 'Ингридиенты'
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
         return f'{self.name}, {self.measurement_unit}'
 
 
 class Tag(models.Model):
-    """Тег."""
+    '''Тег.'''
     name = models.CharField(
         'Название тега',
-        max_length=100,
+        max_length=20,
         unique=True,
     )
     color = models.CharField(
@@ -38,7 +38,7 @@ class Tag(models.Model):
     )
     slug = models.SlugField(
         'Slug',
-        max_length=100,
+        max_length=20,
         unique=True,
     )
 
@@ -51,7 +51,7 @@ class Tag(models.Model):
 
 
 class Recipe(models.Model):
-    """Рецепт."""
+    '''Рецепт.'''
     tags = models.ManyToManyField(
         Tag,
         related_name='recipes',
@@ -92,7 +92,7 @@ class Recipe(models.Model):
 
 
 class Favorite(models.Model):
-    """Избранное."""
+    '''Избранное.'''
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -116,7 +116,7 @@ class Favorite(models.Model):
 
 
 class RecipeIngredients(models.Model):
-    """Ингредиенты в рецепте."""
+    '''Ингредиенты в рецепте.'''
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
@@ -145,7 +145,7 @@ class RecipeIngredients(models.Model):
 
 
 class ShoppingCart(models.Model):
-    """Корзина."""
+    '''Корзина.'''
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -161,7 +161,7 @@ class ShoppingCart(models.Model):
 
     class Meta:
         verbose_name = 'Корзина'
-        verbose_name_plural = 'Корзина'
+        verbose_name_plural = 'Корзины'
         constraints = (
             models.UniqueConstraint(fields=['user', 'recipe'],
                                     name='unique shopping cart'),
