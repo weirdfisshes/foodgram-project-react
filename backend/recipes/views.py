@@ -1,5 +1,4 @@
 from django.db.models import Sum
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
@@ -8,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .filters import IngredientSearchFilter, RecipeFilter
+from .utils import make_cart_file
 from .models import (
     Favorite, Ingredient, Recipe,
     RecipeIngredients, ShoppingCart, Tag
@@ -21,9 +21,9 @@ from .serializers import (
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    '''
+    """
     Вьюсет тегов.
-    '''
+    """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = None
@@ -31,9 +31,9 @@ class TagViewSet(viewsets.ModelViewSet):
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
-    '''
+    """
     Вьюсет ингридиентов.
-    '''
+    """
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     pagination_class = None
@@ -43,9 +43,9 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    '''
+    """
     Вьюсет рецептов.
-    '''
+    """
     queryset = Recipe.objects.all()
     permission_classes = [IsAuthorOrReadOnly]
     filter_backends = [DjangoFilterBackend]
@@ -98,23 +98,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'],
             permission_classes=[IsAuthenticated])
     def download_shopping_cart(self, request):
-        shopping_list = {}
         ingredients = RecipeIngredients.objects.filter(
             recipe__carts__user=request.user).values(
                 'ingredient__name',
                 'ingredient__measurement_unit'
         ).annotate(total=Sum('amount'))
-        for ingredient in ingredients:
-            amount = ingredient['total']
-            name = ingredient['ingredient__name']
-            measurement_unit = ingredient['ingredient__measurement_unit']
-            shopping_list[name] = {
-                'measurement_unit': measurement_unit,
-                'amount': amount
-            }
-        main_list = ([f"{item}: {value['amount']}"
-                      f" {value['measurement_unit']}\n"
-                      for item, value in shopping_list.items()])
-        response = HttpResponse(main_list, 'Content-Type: text/plain')
-        response['Content-Disposition'] = 'attachment; filename="Cart.txt"'
+        response = make_cart_file(ingredients)
         return response

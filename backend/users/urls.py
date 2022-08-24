@@ -6,7 +6,7 @@ from .views import FollowViewSet
 app_name = 'users'
 
 router = DefaultRouter()
-router.register('users', FollowViewSet)
+router.register('users', FollowViewSet, basename='users')
 
 
 urlpatterns = [

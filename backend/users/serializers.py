@@ -6,18 +6,18 @@ from recipes.models import Recipe
 
 
 class LiteRecipeSerializer(serializers.ModelSerializer):
-    '''
+    """
     Сокращенный сериализатор рецепта.
-    '''
+    """
     class Meta:
         model = Recipe
         fields = ('id', 'name', 'image', 'cooking_time')
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
-    '''
+    """
     Сериализатор создания пользователя.
-    '''
+    """
     class Meta:
         model = User
         fields = (
@@ -39,9 +39,9 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 
 class CustomUserSerializer(UserSerializer):
-    '''
+    """
     Сериализатор пользователя.
-    '''
+    """
     is_subscribed = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
