@@ -9,7 +9,7 @@ services:
       - ./.env
   
   web:
-    build: ../backend
+    image: weirdfisshes/foodgram-backend:latest
     restart: always
     ports:
       - "8000:8000"
@@ -22,9 +22,7 @@ services:
       - ./.env
   
   frontend:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: weirdfisshes/foodgram-frontend:latest
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
