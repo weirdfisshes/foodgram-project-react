@@ -19,5 +19,5 @@ class Command(BaseCommand):
             for row in reader(ingredients):
                 if len(row) == SIZE_OF_ROW:
                     Ingredient.objects.get_or_create(
-                        name=row[0], unit=row[1],
+                        name=row[0],  measurement_unit=row[1],
                     )
