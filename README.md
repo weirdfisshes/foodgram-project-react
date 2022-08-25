@@ -25,7 +25,8 @@ password: 1234@qwe
 Технологии: Python 3, Django 2.2.19, PostgreSQL, DRF, Git.
 CI и CD. При пуше в ветку main:
 - обновляется образ на Docker Hub,
-- осуществляется деплой на боевой сервер
+- осуществляется деплой на боевой сервер,
+- если деплой успешный, отправляется сообщение в telegram-bot.
 
 
 ### Как запустить проект локально.
@@ -73,18 +74,20 @@ http://localhost/
 
 Для деплоя на сервер нужно добавить action secrets в GitHub.
 ```
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=имя_базы_данных
-POSTGRES_USER=логин_для_подключения_к_базе_данных
-POSTGRES_PASSWORD=пароль_для_подключения_к_БД
-DB_HOST=название_контейнера
-DB_PORT=порт_для_подключения_к_БД
+DB_ENGINE # django.db.backends.postgresql
+DB_NAME # имя_базы_данных
+POSTGRES_USER # логин_для_подключения_к_базе_данных
+POSTGRES_PASSWORD # пароль_для_подключения_к_БД
+DB_HOST # название_контейнера
+DB_PORT # порт_для_подключения_к_БД
 DOCKER_PASSWORD # пароль от Docker Hub
 DOCKER_USERNAME # логин от Docker Hub
 HOST # публичный ip сервера
 USER # пользователь сервера
 PASSPHRASE # пароль от ssh-ключа (при наличии)
 SSH_KEY # приватный ssh-ключ (включая begin и end)
+TELEGRAM_TO  # id пользователя tg
+TELEGRAM_TOKEN  # token tg-бота
 
 ```
 
