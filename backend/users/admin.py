@@ -9,6 +9,7 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('username', 'email')
     list_filter = ('username', 'email')
     empty_value_display = '-empty-'
+    exclude = ('password',)
 
 
 @admin.register(Follow)
