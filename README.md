@@ -1,4 +1,3 @@
-
 ![example workflow](https://github.com/weirdfisshes/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 # Foodgram
 
