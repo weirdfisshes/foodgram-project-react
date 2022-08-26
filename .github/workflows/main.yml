@@ -25,7 +25,7 @@ jobs:
           push: true
           context: backend/
           no-cache: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram-backend:review2
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram-backend:review
           
       - name: Push frontend to Docker Hub
         uses: docker/build-push-action@v2
@@ -33,7 +33,7 @@ jobs:
           push: true
           context: frontend/
           no-cache: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram-frontend:review2
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram-frontend:review
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,10 +48,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            sudo docker-compose pull ${{ secrets.DOCKER_USERNAME }}/foodgram-backend:review
+            sudo docker-compose pull ${{ secrets.DOCKER_USERNAME }}/foodgram-frontend:review
             sudo docker-compose stop
             sudo docker-compose rm web
-            sudo docker-compose pull ${{ secrets.DOCKER_USERNAME }}/foodgram-backend:review2
-            sudo docker-compose pull ${{ secrets.DOCKER_USERNAME }}/foodgram-frontend:review2
             rm .env
             touch .env
             echo DEBUG=${{ secrets.DEBUG }} >> .env
@@ -62,6 +62,7 @@ jobs:
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
-            sudo docker-compose up -d --build
-
-      
+            sudo docker-compose up -d
+            sudo docker-compose exec -T backend python manage.py makemigrations
+            sudo docker-compose exec -T backend python manage.py migrate
+            sudo docker-compose exec -T backend python manage.py load_data
