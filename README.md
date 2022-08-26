@@ -47,7 +47,7 @@ DEBUG=True или False
 ```
 docker-compose up -d --build
 ```
-Выполните миграции
+Выполните миграции:
 ```
 docker-compose exec web python manage.py migrate 
 ```
